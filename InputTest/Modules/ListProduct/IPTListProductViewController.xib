@@ -32,13 +32,16 @@
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gpD-RF-DlI">
                     <rect key="frame" x="20" y="812" width="374" height="50"/>
-                    <color key="backgroundColor" red="0.29803921570000003" green="0.6588235294" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.46645939349999999" green="0.1986253858" blue="0.12944093349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="NC4-0L-okD"/>
                     </constraints>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="Button"/>
                     <buttonConfiguration key="configuration" style="plain" title="Submit"/>
+                    <connections>
+                        <action selector="submitTapped:" destination="-1" eventType="touchUpInside" id="VMy-qf-IyJ"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

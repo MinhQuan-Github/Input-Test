@@ -6,24 +6,60 @@
 //
 
 import UIKit
+import Alamofire
 
 class IPTLostConnectionViewController: UIViewController {
+    
+    @IBOutlet weak var noConnectionLabel: UILabel!
+    @IBOutlet weak var retryLabel: UILabel!
+    @IBOutlet weak var retryView: UIView!
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
+    @IBOutlet weak var retryImageView: UIImageView!
+    var isInitData: Bool! = false
+
+    convenience init(withInitData: Bool) {
+        self.init()
+        self.isInitData = withInitData
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.retryView.layer.borderWidth = 1.0
+        self.retryView.layer.borderColor = UIColor.init(white: 104.0/255.0, alpha: 1.0).cgColor
+        self.retryView.layer.cornerRadius = 5.0
+        self.activityView.isHidden = true
+        self.retryImageView.isHidden = false
     }
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.retryLabel.text = "Retry"
+        self.noConnectionLabel.text = "NO NETWORK CONNECTION"
     }
-    */
 
+    @IBAction func pressRetry(_ sender: UIButton) {
+        self.activityView.isHidden = false
+        self.retryImageView.isHidden = true
+        self.retryLabel.text = "Connecting"
+
+        if NetworkReachabilityManager()!.isReachable {
+            Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(connectSuccess), userInfo: nil, repeats: false)
+        } else {
+            Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(connectFail), userInfo: nil, repeats: false)
+        }
+    }
+
+    @objc func connectSuccess() {
+        self.activityView.isHidden = true
+        self.retryImageView.isHidden = false
+        self.retryLabel.text = "Retry"
+        let vc = BaseNavigationViewController(rootViewController: IPTListProductViewController())
+        IPTRootWindowService.getInstance.switchRootViewController(viewController: vc, animated: true, completion: nil)
+    }
+
+    @objc func connectFail() {
+        self.activityView.isHidden = true
+        self.retryImageView.isHidden = false
+        self.retryLabel.text = "Retry"
+    }
 }

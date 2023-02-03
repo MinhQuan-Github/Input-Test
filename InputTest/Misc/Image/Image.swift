@@ -5,4 +5,8 @@
 //  Created by Minh Quan on 07/01/2023.
 //
 
-import Foundation
+import UIKit
+
+class Image {
+    static let imageDefault = UIImage(systemName: "xmark.rectangle")
+}
